@@ -10,8 +10,6 @@ public class CsvProcessor {
 		this.t1 = new Thread(csvFileHandler);
 	}
 
-	public boolean flag = true;
-	
 	public void initiateThread() {
 		
 		t1.start();

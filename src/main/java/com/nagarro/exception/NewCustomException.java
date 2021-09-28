@@ -1,5 +1,6 @@
 package com.nagarro.exception;
 
+@SuppressWarnings("all")
 public class NewCustomException extends Exception {
 
 	/**

@@ -1,5 +1,7 @@
 package com.nagarro.product_details;
 import com.opencsv.bean.CsvBindByPosition;
+
+@SuppressWarnings("all")
 public class ProductDetails {
 
 	

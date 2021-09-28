@@ -1,9 +1,7 @@
 package com.nagarro.csv_handler;
 
-import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.IOException;
 import java.io.Reader;
 import java.nio.file.Files;
@@ -12,7 +10,6 @@ import java.nio.file.Paths;
 import java.nio.file.attribute.BasicFileAttributes;
 import java.nio.file.attribute.FileTime;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -20,7 +17,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.atomic.AtomicBoolean;
-
 import com.nagarro.constants.Constants;
 import com.nagarro.data_store.DataStore;
 import com.nagarro.exception.NewCustomException;
@@ -29,11 +25,11 @@ import com.opencsv.bean.ColumnPositionMappingStrategy;
 import com.opencsv.bean.CsvToBean;
 import com.opencsv.bean.CsvToBeanBuilder;
 
-
+@SuppressWarnings("all")
 public class CsvHandler implements Runnable {
 
 	private List<String> updatedFiles;
-	private Map<String, FileTime> csvListWithTime;
+	private Map<String, FileTime> csvMapWithTime;
 	private final AtomicBoolean running = new AtomicBoolean(false);
 
 	public void stop() {
@@ -42,17 +38,16 @@ public class CsvHandler implements Runnable {
 	
 	@Override
 	public void run() {
-		// CsvFilesDTO csvDto = new CsvFilesDTO();
-		csvListWithTime = new HashMap<>();
+		csvMapWithTime = new HashMap<>();
 		running.set(true);
 		while (running.get()) {
 			try {
 				/*
-				 * Search the Directory after a duration of 1 minute for the
+				 * Search the Directory after a duration of 25 seconds for the
 				 * updated or newly added files
 				 */
 				searchCSVinDirectory();
-				Thread.sleep(1000);
+				Thread.sleep(25*1000);
 			} catch (InterruptedException e) {
 				System.out.println("Unexpected Error. Please try again");
 			} catch (NewCustomException exception) {
@@ -76,19 +71,19 @@ public class CsvHandler implements Runnable {
 
 			for (int i = 0; i < filenames.length; i++) {
 				if (filenames[i].endsWith(".csv")) {
-					if (!csvListWithTime.containsKey(filenames[i])) {
-						csvListWithTime.put(filenames[i], null);
+					if (!csvMapWithTime.containsKey(filenames[i])) {
+						csvMapWithTime.put(filenames[i], null);
 					}
 					
 					Path path = Paths.get(Constants.CSV_FILES_URL, filenames[i]);
 					BasicFileAttributes fileAttributes = Files.readAttributes(path,
 							BasicFileAttributes.class);
 					
-					if (csvListWithTime.get(filenames[i]) == null
-							|| !csvListWithTime.get(filenames[i]).equals(
+					if (csvMapWithTime.get(filenames[i]) == null
+							|| !csvMapWithTime.get(filenames[i]).equals(
 									fileAttributes.lastModifiedTime())) {
 						updatedFiles.add(filenames[i]);
-						csvListWithTime.put(filenames[i], fileAttributes.lastModifiedTime());
+						csvMapWithTime.put(filenames[i], fileAttributes.lastModifiedTime());
 					}
 				}
 			}
@@ -126,20 +121,14 @@ public class CsvHandler implements Runnable {
 		}
 	}
 
-	/*
-	 * This Method receives filename . Read it Line by Line. Create an object of
-	 * Flight class and stores it in the map with the relevant filename as key
-	 * For the sub map it creates a key by concatenating Departure Location and
-	 * Arrival Location and checks if it exists If the Key exists already the
-	 * object is added to the List otherwise a new entry is created in the Outer
-	 * Map using Departure Location and Arrival Location as Key.
-	 */
+
 	public Set<ProductDetails> readCsvAddData(String csvFile) throws NewCustomException {
 		Set<ProductDetails> Data = new HashSet<>();
 		csvFile = Constants.CSV_FILES_URL + csvFile;
 
 		try {
 			Reader reader = Files.newBufferedReader(Paths.get(csvFile));
+
 
             ColumnPositionMappingStrategy strategy = new ColumnPositionMappingStrategy();
             strategy.setType(ProductDetails.class);

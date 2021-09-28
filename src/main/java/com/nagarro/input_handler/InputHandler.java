@@ -1,10 +1,10 @@
 package com.nagarro.input_handler;
 
 import java.util.*;
-
-import com.nagarro.output_handler.OutputHandler;
+import com.nagarro.constants.Constants;
 import com.nagarro.product_details.ProductDetails;
 
+@SuppressWarnings("all")
 public class InputHandler {
     private static final Set<String> sizeChart =
             new HashSet<>(Arrays.asList("xs", "s", "m", "l", "xl", "xxl"));
@@ -25,8 +25,8 @@ public class InputHandler {
     }
 
     public void getUserInput() {
-        
-    	
+
+        System.out.println(Constants.WELCOME_MESSAGE);
     	getColor();
         getSize();
         getGender();
@@ -38,10 +38,7 @@ public class InputHandler {
     }
 
     private void getOutputPreference() {
-        System.out.println("Choose the output preference from below options : " + "\n" +
-                "1 : Sort By Price " + "\n" +
-                "2 : Sort By rating" + "\n" +
-                "3 : Sort By Price and Rating" + "\n");
+        System.out.println(Constants.ENTER_OUTPUT_PREFERENCES);
 
         try {
             preference = sc.nextInt();
@@ -65,7 +62,7 @@ public class InputHandler {
 
     }
     private void getSize() {
-        System.out.println("Enter the size: ");
+        System.out.println(Constants.ENTER_SIZE);
         try {
             itemSize = sc.nextLine();
             if(!sizeChart.contains(itemSize.toLowerCase())) {
@@ -73,10 +70,10 @@ public class InputHandler {
             }
 
         } catch (IllegalArgumentException e) {
-            System.out.println("Please Enter a valid size");
+            System.out.println(Constants.ENTER_VALID_SIZE);
             getSize();
         } catch (InputMismatchException e) {
-            System.out.println("Please Enter a Valid Input");
+            System.out.println(Constants.ENTER_VALID_INPUT);
             sc.next();
             getSize();
         } finally {
@@ -87,7 +84,7 @@ public class InputHandler {
 
 
     private void getColor() {
-        System.out.println("Enter the Color of a T shirt : ");
+        System.out.println(Constants.ENTER_COLOR);
         try {
             itemColor = sc.nextLine();
         } catch (Exception e) {
@@ -99,7 +96,7 @@ public class InputHandler {
     }
 
     private void getGender() {
-        System.out.println("Gender Recommendation : ");
+        System.out.println(Constants.ENTER_GENDER);
         try {
             itemGender = sc.nextLine();
             if(!genderRecommendation.contains(itemGender.toLowerCase())) {
@@ -108,10 +105,10 @@ public class InputHandler {
 
 
         } catch (IllegalArgumentException e) {
-            System.out.println("Please specify an appropriate gender");
+            System.out.println(Constants.ENTER_VALID_GENDER);
             getGender();
         } catch (InputMismatchException e) {
-            System.out.println("Please Enter a Valid Input");
+            System.out.println(Constants.ENTER_VALID_INPUT);
             sc.next();
             getGender();
         } finally {

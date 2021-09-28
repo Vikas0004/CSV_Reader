@@ -1,9 +1,9 @@
 package com.nagarro.service_class;
 
 import java.util.*;
-
 import com.nagarro.product_details.ProductDetails;
-public class ServiceClass 
+@SuppressWarnings("all")
+public class ServiceClass
 {
 	
 	public List<ProductDetails> getProducts(List<ProductDetails> list, String color, String size, String gender) {

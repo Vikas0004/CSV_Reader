@@ -1,16 +1,9 @@
 package com.nagarro.data_store;
 
-import java.io.Reader;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.*;
-
-import com.nagarro.constants.Constants;
 import com.nagarro.product_details.*;
-import com.opencsv.bean.ColumnPositionMappingStrategy;
-import com.opencsv.bean.CsvToBean;
-import com.opencsv.bean.CsvToBeanBuilder;
 
+@SuppressWarnings("all")
 public class DataStore 
 {
 	/*
@@ -38,15 +31,5 @@ public class DataStore
 		}
 
 	}
-	
-	
-//	public void getList() {
-//			
-//		System.out.println("rtuoposaklkjhfds");
-//		System.out.println(list.size());
-//		for(ProductDetails p:list) {
-//			System.out.println(p.toString());
-//		}
-//	}
-	
+
 }

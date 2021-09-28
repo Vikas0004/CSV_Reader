@@ -1,24 +1,25 @@
 package com.nagarro.output_handler;
 
+import java.util.*;
 import com.nagarro.constants.Constants;
 import com.nagarro.data_store.DataStore;
 import com.nagarro.product_details.ProductDetails;
 import com.nagarro.service_class.ServiceClass;
 
-import java.util.*;
-public class OutputHandler {
 
-	
+@SuppressWarnings("all")
+public class OutputHandler
+{
 	ProductDetails inputDetails;
 	ServiceClass serviceClass;
 	private int preferenceCase;
 	List<ProductDetails> list;
 	DataStore dataStore;
 	List<ProductDetails> data;
-	public OutputHandler(ProductDetails inputDetails) {
+
+    public OutputHandler(ProductDetails inputDetails) {
         this.dataStore = DataStore.getInstance();
         this.data = dataStore.list;
-//        for(ProductDetails p : dat)
 		this.inputDetails = inputDetails;
         this.serviceClass = new ServiceClass();
         this.list = serviceClass.getProducts(data,inputDetails.getColor(), inputDetails.getSize(), inputDetails.getGender());
@@ -34,7 +35,7 @@ public class OutputHandler {
                 serviceClass.sortByPriceAndRating(list);
                 break;
             default:
-                System.out.println("");
+                serviceClass.sortByPriceAndRating(list);
         }
 
     }
